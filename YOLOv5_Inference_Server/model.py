@@ -49,10 +49,10 @@ def load_model():
     #model.conf = 0.6  # confidence threshold
 
     
-    model = YOLO("../Weights/best_plsplspls.pt")
+    # model = YOLO("../Weights/best_plsplspls.pt")
     # model = YOLO("../Weights/bestv3_nat.pt")
     # model = YOLO("../Weights/best_e205v8.pt")
-    # model = YOLO("../Weights/best_kev.pt")
+    model = YOLO("../Weights/best_kev.pt")
     # print("Model Classes:", model.names)
     return model
 
@@ -88,40 +88,40 @@ def draw_own_bbox(img,x1,y1,x2,y2,label,color=(36,255,12),text_color=(0,0,0)):
         os.makedirs('own_results')
 
 
-    name_to_id = {
-        "NA": 'NA',
-        "Bullseye": 0,
-        "one": 11,
-        "two": 12,
-        "three": 13,
-        "four": 14,
-        "five": 15,
-        "six": 16,
-        "seven": 17,
-        "eight": 18,
-        "nine": 19,
-        "A": 20,
-        "B": 21,
-        "C": 22,
-        "D": 23,
-        "E": 24,
-        "F": 25,
-        "G": 26,
-        "H": 27,
-        "S": 28,
-        "T": 29,
-        "U": 30,
-        "V": 31,
-        "W": 32,
-        "X": 33,
-        "Y": 34,
-        "Z": 35,
-        "up": 36,
-        "down": 37,
-        "right": 38,
-        "left": 39,
-        "circle": 40
-    }
+    # name_to_id = {
+    #     "NA": 'NA',
+    #     "Bullseye": 0,
+    #     "one": 11,
+    #     "two": 12,
+    #     "three": 13,
+    #     "four": 14,
+    #     "five": 15,
+    #     "six": 16,
+    #     "seven": 17,
+    #     "eight": 18,
+    #     "nine": 19,
+    #     "A": 20,
+    #     "B": 21,
+    #     "C": 22,
+    #     "D": 23,
+    #     "E": 24,
+    #     "F": 25,
+    #     "G": 26,
+    #     "H": 27,
+    #     "S": 28,
+    #     "T": 29,
+    #     "U": 30,
+    #     "V": 31,
+    #     "W": 32,
+    #     "X": 33,
+    #     "Y": 34,
+    #     "Z": 35,
+    #     "up": 36,
+    #     "down": 37,
+    #     "right": 38,
+    #     "left": 39,
+    #     "circle": 40
+    # }
 
     # name_to_id = {
     #     "NA": 'NA',
@@ -157,40 +157,40 @@ def draw_own_bbox(img,x1,y1,x2,y2,label,color=(36,255,12),text_color=(0,0,0)):
     #     "left_id39": 39,
     #     "stop-id40": 40
     # }
-    # name_to_id = {
-    #     "NA": 'NA',
-    #     "0": 0,
-    #     "11": 11,
-    #     "12": 12,
-    #     "13": 13,
-    #     "14": 14,
-    #     "15": 15,
-    #     "16": 16,
-    #     "17": 17,
-    #     "18": 18,
-    #     "19": 19,
-    #     "20": 20,
-    #     "21": 21,
-    #     "22": 22,
-    #     "23": 23,
-    #     "24": 24,
-    #     "25": 25,
-    #     "26": 26,
-    #     "27": 27,
-    #     "28": 28,
-    #     "29": 29,
-    #     "30": 30,
-    #     "31": 31,
-    #     "32": 32,
-    #     "33": 33,
-    #     "34": 34,
-    #     "35": 35,
-    #     "36": 36,
-    #     "37": 37,
-    #     "38": 38,
-    #     "39": 39,
-    #     "40": 40
-    # }
+    name_to_id = {
+        "NA": 'NA',
+        "0": 0,
+        "11": 11,
+        "12": 12,
+        "13": 13,
+        "14": 14,
+        "15": 15,
+        "16": 16,
+        "17": 17,
+        "18": 18,
+        "19": 19,
+        "20": 20,
+        "21": 21,
+        "22": 22,
+        "23": 23,
+        "24": 24,
+        "25": 25,
+        "26": 26,
+        "27": 27,
+        "28": 28,
+        "29": 29,
+        "30": 30,
+        "31": 31,
+        "32": 32,
+        "33": 33,
+        "34": 34,
+        "35": 35,
+        "36": 36,
+        "37": 37,
+        "38": 38,
+        "39": 39,
+        "40": 40
+    }
     # Reformat the label to {label name}-{label id}
     label_id = name_to_id.get(label, 'NA')
     label = label + "-" + str(label_id)
@@ -329,40 +329,40 @@ def predict_image(image, model, signal):
                 draw_own_bbox(np.array(img), pred['xmin'], pred['ymin'], pred['xmax'], pred['ymax'], pred['name'])
 
             # Map the prediction to an ID
-            name_to_id = {
-                "NA": 'NA',
-                "Bullseye": 0,
-                "one": 11,
-                "two": 12,
-                "three": 13,
-                "four": 14,
-                "five": 15,
-                "six": 16,
-                "seven": 17,
-                "eight": 18,
-                "nine": 19,
-                "A": 20,
-                "B": 21,
-                "C": 22,
-                "D": 23,
-                "E": 24,
-                "F": 25,
-                "G": 26,
-                "H": 27,
-                "S": 28,
-                "T": 29,
-                "U": 30,
-                "V": 31,
-                "W": 32,
-                "X": 33,
-                "Y": 34,
-                "Z": 35,
-                "up": 36,
-                "down": 37,
-                "right": 38,
-                "left": 39,
-                "circle": 40
-            }
+            # name_to_id = {
+            #     "NA": 'NA',
+            #     "Bullseye": 0,
+            #     "one": 11,
+            #     "two": 12,
+            #     "three": 13,
+            #     "four": 14,
+            #     "five": 15,
+            #     "six": 16,
+            #     "seven": 17,
+            #     "eight": 18,
+            #     "nine": 19,
+            #     "A": 20,
+            #     "B": 21,
+            #     "C": 22,
+            #     "D": 23,
+            #     "E": 24,
+            #     "F": 25,
+            #     "G": 26,
+            #     "H": 27,
+            #     "S": 28,
+            #     "T": 29,
+            #     "U": 30,
+            #     "V": 31,
+            #     "W": 32,
+            #     "X": 33,
+            #     "Y": 34,
+            #     "Z": 35,
+            #     "up": 36,
+            #     "down": 37,
+            #     "right": 38,
+            #     "left": 39,
+            #     "circle": 40
+            # }
             
             # name_to_id = {
             #     "NA": 'NA',
@@ -398,40 +398,40 @@ def predict_image(image, model, signal):
             #     "left_id39": 39,
             #     "stop-id40": 40
             # }
-                # name_to_id = {
-                #     "NA": 'NA',
-                #     "0": 0,
-                #     "11": 11,
-                #     "12": 12,
-                #     "13": 13,
-                #     "14": 14,
-                #     "15": 15,
-                #     "16": 16,
-                #     "17": 17,
-                #     "18": 18,
-                #     "19": 19,
-                #     "20": 20,
-                #     "21": 21,
-                #     "22": 22,
-                #     "23": 23,
-                #     "24": 24,
-                #     "25": 25,
-                #     "26": 26,
-                #     "27": 27,
-                #     "28": 28,
-                #     "29": 29,
-                #     "30": 30,
-                #     "31": 31,
-                #     "32": 32,
-                #     "33": 33,
-                #     "34": 34,
-                #     "35": 35,
-                #     "36": 36,
-                #     "37": 37,
-                #     "38": 38,
-                #     "39": 39,
-                #     "40": 40
-                # }
+                name_to_id = {
+                    "NA": 'NA',
+                    "0": 0,
+                    "11": 11,
+                    "12": 12,
+                    "13": 13,
+                    "14": 14,
+                    "15": 15,
+                    "16": 16,
+                    "17": 17,
+                    "18": 18,
+                    "19": 19,
+                    "20": 20,
+                    "21": 21,
+                    "22": 22,
+                    "23": 23,
+                    "24": 24,
+                    "25": 25,
+                    "26": 26,
+                    "27": 27,
+                    "28": 28,
+                    "29": 29,
+                    "30": 30,
+                    "31": 31,
+                    "32": 32,
+                    "33": 33,
+                    "34": 34,
+                    "35": 35,
+                    "36": 36,
+                    "37": 37,
+                    "38": 38,
+                    "39": 39,
+                    "40": 40
+                }
             if not isinstance(pred, str):
                 image_id = str(name_to_id[pred['name']])
             else:
@@ -447,65 +447,6 @@ def predict_image(image, model, signal):
         print(f"Error during prediction: {e}")
         return 'NA'
       
-# nat friend's model
-# def predict_image(image, model, signal):
-    """
-    Predict the image using the YOLO model and return the predicted label.
-
-    Inputs
-    ------
-    image: str - filename of the image to predict
-    model: torch hub YOLO model - loaded YOLO model using torch.hub
-    signal: str - signal for further filtering (L, R, C)
-
-    Returns
-    -------
-    str - predicted label
-    """
-    try:
-        # Load the image
-        img = Image.open(os.path.join('images', image))
-        img_array = np.array(img)  # Convert to NumPy array
-
-        # Run YOLO inference (Fixed: Added `size=640`)
-        results = model(img_array, size=640)  # ✅ Corrected for torch.hub
-
-        # Extract prediction results (Fixed: Removed `[0]`)
-        df_results = results.pandas().xyxy[0]
-
-        # Calculate bounding box area
-        df_results['bboxArea'] = (df_results['ymax'] - df_results['ymin']) * (df_results['xmax'] - df_results['xmin'])
-
-        # 🔥 Fix: Use `df_results['class']` instead of `df_results['name']`
-        df_results = df_results[df_results['class'] != 0]  # Filter out class ID 0
-
-        if df_results.empty:
-            print("No valid predictions found.")
-            return "NA"
-
-        # Select the largest detected object
-        pred = df_results.sort_values('bboxArea', ascending=False).iloc[0]
-
-        # Get class ID (Fixed: Changed `name` to `class`)
-        class_id = int(pred['class'])  # ✅ Get the class ID from results
-
-        # Convert class ID to label (Fixed: Mapping keys are now class IDs)
-        name_to_id = {
-            0: "NA", 10: "Bullseye", 11: "one", 12: "two", 13: "three", 14: "four", 15: "five",
-            16: "six", 17: "seven", 18: "eight", 19: "nine", 20: "A", 21: "B", 22: "C", 23: "D",
-            24: "E", 25: "F", 26: "G", 27: "H", 28: "S", 29: "T", 30: "U", 31: "V", 32: "W",
-            33: "X", 34: "Y", 35: "Z", 36: "up", 37: "down", 38: "right", 39: "left", 40: "circle"
-        }
-
-        # Get the class name from ID, defaulting to class_id if not found
-        image_id = name_to_id.get(class_id, str(class_id))  # ✅ Ensures valid label
-
-        print(f"Final result: {image_id}")
-        return image_id
-
-    except Exception as e:
-        print(f"⚠️ Error: {e} | Returning NA")
-        return "NA"
 
 def predict_image_week_9(image, model):
     # Load the image
