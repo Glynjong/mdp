@@ -38,14 +38,21 @@ def load_model():
     # temp = pathlib.PosixPath
     # pathlib.PosixPath = pathlib.WindowsPath
     # file_path = r"C:\Users\DELL G15\Desktop\SCHOOL\MDP\mdp\Weights\best_yolo5_2024_10_18.pt"
+    # yolov5_path = r"C:\Users\DELL G15\Desktop\SCHOOL\MDP\mdp\yolov5"  # Explicit full path
 
-    # print("Loading model from:", file_path)
+    # print(f"Loading YOLOv5 from: {yolov5_path}")
+    
+    # model = torch.hub.load(yolov5_path, 'custom', path=file_path, source='local', force_reload=True)
 
-    # # Ensure the path is a normal Windows string
-    # model = yolov5.load(file_path)  
-    # model.conf = 0.6  # confidence threshold
+    # print("✅ Model Loaded Successfully!")
+    # model = YOLO(file_path)  
+    #model.conf = 0.6  # confidence threshold
 
-    model = YOLO("../Weights/beste380.pt")
+    
+    model = YOLO("../Weights/best_plsplspls.pt")
+    # model = YOLO("../Weights/bestv3_nat.pt")
+    # model = YOLO("../Weights/best_e205v8.pt")
+    # model = YOLO("../Weights/best_kev.pt")
     # print("Model Classes:", model.names)
     return model
 
@@ -115,6 +122,75 @@ def draw_own_bbox(img,x1,y1,x2,y2,label,color=(36,255,12),text_color=(0,0,0)):
         "left": 39,
         "circle": 40
     }
+
+    # name_to_id = {
+    #     "NA": 'NA',
+    #     "Bullseye-id10": 0,
+    #     "one_id11": 11,
+    #     "two_id12": 12,
+    #     "three_id13": 13,
+    #     "four_id14": 14,
+    #     "five_id15": 15,
+    #     "six_id16": 16,
+    #     "seven_id17": 17,
+    #     "eight_id18": 18,
+    #     "nine_id19": 19,
+    #     "A_id20": 20,
+    #     "B_id21": 21,
+    #     "C_id22": 22,
+    #     "D_id23": 23,
+    #     "E_id24": 24,
+    #     "F_id25": 25,
+    #     "G_id26": 26,
+    #     "H_id27": 27,
+    #     "S_id28": 28,
+    #     "T_id29": 29,
+    #     "U_id30": 30,
+    #     "V_id31": 31,
+    #     "W_id32": 32,
+    #     "X_id33": 33,
+    #     "Y_id34": 34,
+    #     "Z_id35": 35,
+    #     "up_id36": 36,
+    #     "down_id37": 37,
+    #     "right_id38": 38,
+    #     "left_id39": 39,
+    #     "stop-id40": 40
+    # }
+    # name_to_id = {
+    #     "NA": 'NA',
+    #     "0": 0,
+    #     "11": 11,
+    #     "12": 12,
+    #     "13": 13,
+    #     "14": 14,
+    #     "15": 15,
+    #     "16": 16,
+    #     "17": 17,
+    #     "18": 18,
+    #     "19": 19,
+    #     "20": 20,
+    #     "21": 21,
+    #     "22": 22,
+    #     "23": 23,
+    #     "24": 24,
+    #     "25": 25,
+    #     "26": 26,
+    #     "27": 27,
+    #     "28": 28,
+    #     "29": 29,
+    #     "30": 30,
+    #     "31": 31,
+    #     "32": 32,
+    #     "33": 33,
+    #     "34": 34,
+    #     "35": 35,
+    #     "36": 36,
+    #     "37": 37,
+    #     "38": 38,
+    #     "39": 39,
+    #     "40": 40
+    # }
     # Reformat the label to {label name}-{label id}
     label_id = name_to_id.get(label, 'NA')
     label = label + "-" + str(label_id)
@@ -203,6 +279,7 @@ def predict_image(image, model, signal):
 
             # Filter out Bullseye
             pred_list = df_results[df_results['name'] != 'Bullseye']
+            # pred_list = df_results[df_results['name'] != 'Bullseye-id10']
 
             # Initialize prediction to NA
             pred = 'NA'
@@ -210,6 +287,7 @@ def predict_image(image, model, signal):
             # If only one label is detected and it's not Bullseye
             if len(pred_list) == 1:
                 if pred_list.iloc[0]['name'] != 'Bullseye':
+                # if pred_list.iloc[0]['name'] != 'Bullseye-id10':
                     pred = pred_list.iloc[0]
 
             # If more than one label is detected
@@ -219,6 +297,7 @@ def predict_image(image, model, signal):
                 current_area = pred_list.iloc[0]['bboxArea']
                 for _, row in pred_list.iterrows():
                     if row['name'] != 'Bullseye' and row['confidence'] > 0.5 and (
+                    # if row['name'] != 'Bullseye-id10' and row['confidence'] > 0.5 and (
                         (current_area * 0.8 <= row['bboxArea']) or
                         (row['name'] == 'One' and current_area * 0.6 <= row['bboxArea'])
                     ):
@@ -284,6 +363,75 @@ def predict_image(image, model, signal):
                 "left": 39,
                 "circle": 40
             }
+            
+            # name_to_id = {
+            #     "NA": 'NA',
+            #     "Bullseye-id10": 0,
+            #     "one_id11": 11,
+            #     "two_id12": 12,
+            #     "three_id13": 13,
+            #     "four_id14": 14,
+            #     "five_id15": 15,
+            #     "six_id16": 16,
+            #     "seven_id17": 17,
+            #     "eight_id18": 18,
+            #     "nine_id19": 19,
+            #     "A_id20": 20,
+            #     "B_id21": 21,
+            #     "C_id22": 22,
+            #     "D_id23": 23,
+            #     "E_id24": 24,
+            #     "F_id25": 25,
+            #     "G_id26": 26,
+            #     "H_id27": 27,
+            #     "S_id28": 28,
+            #     "T_id29": 29,
+            #     "U_id30": 30,
+            #     "V_id31": 31,
+            #     "W_id32": 32,
+            #     "X_id33": 33,
+            #     "Y_id34": 34,
+            #     "Z_id35": 35,
+            #     "up_id36": 36,
+            #     "down_id37": 37,
+            #     "right_id38": 38,
+            #     "left_id39": 39,
+            #     "stop-id40": 40
+            # }
+                # name_to_id = {
+                #     "NA": 'NA',
+                #     "0": 0,
+                #     "11": 11,
+                #     "12": 12,
+                #     "13": 13,
+                #     "14": 14,
+                #     "15": 15,
+                #     "16": 16,
+                #     "17": 17,
+                #     "18": 18,
+                #     "19": 19,
+                #     "20": 20,
+                #     "21": 21,
+                #     "22": 22,
+                #     "23": 23,
+                #     "24": 24,
+                #     "25": 25,
+                #     "26": 26,
+                #     "27": 27,
+                #     "28": 28,
+                #     "29": 29,
+                #     "30": 30,
+                #     "31": 31,
+                #     "32": 32,
+                #     "33": 33,
+                #     "34": 34,
+                #     "35": 35,
+                #     "36": 36,
+                #     "37": 37,
+                #     "38": 38,
+                #     "39": 39,
+                #     "40": 40
+                # }
             if not isinstance(pred, str):
                 image_id = str(name_to_id[pred['name']])
             else:
@@ -298,154 +446,66 @@ def predict_image(image, model, signal):
     except Exception as e:
         print(f"Error during prediction: {e}")
         return 'NA'
-    
-    
+      
 # nat friend's model
 # def predict_image(image, model, signal):
-#     """
-#     Predict the image using the model and save the results in the 'runs' folder
-    
-#     Inputs
-#     ------
-#     image: str - name of the image file
+    """
+    Predict the image using the YOLO model and return the predicted label.
 
-#     model: torch.hub.load - model to be used for prediction
+    Inputs
+    ------
+    image: str - filename of the image to predict
+    model: torch hub YOLO model - loaded YOLO model using torch.hub
+    signal: str - signal for further filtering (L, R, C)
 
-#     signal: str - signal to be used for filtering the predictions
+    Returns
+    -------
+    str - predicted label
+    """
+    try:
+        # Load the image
+        img = Image.open(os.path.join('images', image))
+        img_array = np.array(img)  # Convert to NumPy array
 
-#     Returns
-#     -------
-#     str - predicted label
-#     """
-#     try:
-#         # Load the image
-#         img = Image.open(os.path.join('uploads', image))
+        # Run YOLO inference (Fixed: Added `size=640`)
+        results = model(img_array, size=640)  # ✅ Corrected for torch.hub
 
-#         # Predict the image using the model
-#         results = model(img)
+        # Extract prediction results (Fixed: Removed `[0]`)
+        df_results = results.pandas().xyxy[0]
 
-#         # Images with predicted bounding boxes are saved in the runs folder
-#         results.save('runs')
+        # Calculate bounding box area
+        df_results['bboxArea'] = (df_results['ymax'] - df_results['ymin']) * (df_results['xmax'] - df_results['xmin'])
 
-#         # Convert the results to a pandas dataframe and calculate the height and width of the bounding box and the area of the bounding box
-#         df_results = results.pandas().xyxy[0]
-#         df_results['bboxHt'] = df_results['ymax'] - df_results['ymin']
-#         df_results['bboxWt'] = df_results['xmax'] - df_results['xmin']
-#         df_results['bboxArea'] = df_results['bboxHt'] * df_results['bboxWt']
+        # 🔥 Fix: Use `df_results['class']` instead of `df_results['name']`
+        df_results = df_results[df_results['class'] != 0]  # Filter out class ID 0
 
-#         # Label with largest bbox height will be last
-#         df_results = df_results.sort_values('bboxArea', ascending=False)
+        if df_results.empty:
+            print("No valid predictions found.")
+            return "NA"
 
-#         # Filter out Bullseye
-#         pred_list = df_results 
-#         pred_list = pred_list[pred_list['name'] != 'Bullseye']
-        
-#         # Initialize prediction to NA
-#         pred = 'NA'
+        # Select the largest detected object
+        pred = df_results.sort_values('bboxArea', ascending=False).iloc[0]
 
-#         # Ignore Bullseye unless they are the only image detected and select the last label in the list (the last label will be the one with the largest bbox height)
-#         if len(pred_list) == 1:
-#             if pred_list.iloc[0]['name'] != 'Bullseye':
-#                 pred = pred_list.iloc[0]
+        # Get class ID (Fixed: Changed `name` to `class`)
+        class_id = int(pred['class'])  # ✅ Get the class ID from results
 
-#         # If more than 1 label is detected
-#         elif len(pred_list) > 1:
+        # Convert class ID to label (Fixed: Mapping keys are now class IDs)
+        name_to_id = {
+            0: "NA", 10: "Bullseye", 11: "one", 12: "two", 13: "three", 14: "four", 15: "five",
+            16: "six", 17: "seven", 18: "eight", 19: "nine", 20: "A", 21: "B", 22: "C", 23: "D",
+            24: "E", 25: "F", 26: "G", 27: "H", 28: "S", 29: "T", 30: "U", 31: "V", 32: "W",
+            33: "X", 34: "Y", 35: "Z", 36: "up", 37: "down", 38: "right", 39: "left", 40: "circle"
+        }
 
-#             # More than 1 Symbol detected, filter by confidence and area
-#             pred_shortlist = []
-#             current_area = pred_list.iloc[0]['bboxArea']
-#             # For each prediction, check if the confidence is greater than 0.5 and if the area is greater than 80% of the current area or 60% if the prediction is 'One'
-#             for _, row in pred_list.iterrows():
-#                 if row['name'] != 'Bullseye' and row['confidence'] > 0.5 and ((current_area * 0.8 <= row['bboxArea']) or (row['name'] == 'One' and current_area * 0.6 <= row['bboxArea'])):
-#                     # Add the prediction to the shortlist
-#                     pred_shortlist.append(row)
-#                     # Update the current area to the area of the prediction
-#                     current_area = row['bboxArea']
-            
-#             # If only 1 prediction remains after filtering by confidence and area
-#             if len(pred_shortlist) == 1:
-#                 # Choose that prediction
-#                 pred = pred_shortlist[0]
+        # Get the class name from ID, defaulting to class_id if not found
+        image_id = name_to_id.get(class_id, str(class_id))  # ✅ Ensures valid label
 
-#             # If multiple predictions remain after filtering by confidence and area
-#             else:
-#                 # Use signal of {signal} to filter further 
-                
-#                 # Sort the predictions by xmin
-#                 pred_shortlist.sort(key=lambda x: x['xmin'])
+        print(f"Final result: {image_id}")
+        return image_id
 
-#                 # If signal is 'L', choose the first prediction in the list, i.e. leftmost in the image
-#                 if signal == 'L':
-#                     pred = pred_shortlist[0]
-                
-#                 # If signal is 'R', choose the last prediction in the list, i.e. rightmost in the image
-#                 elif signal == 'R':
-#                     pred = pred_shortlist[-1]
-                
-#                 # If signal is 'C', choose the prediction that is central in the image
-#                 else:
-#                     # Loop through the predictions shortlist
-#                     for i in range(len(pred_shortlist)):
-#                         # If the xmin of the prediction is between 250 and 774, i.e. the center of the image, choose that prediction
-#                         if pred_shortlist[i]['xmin'] > 250 and pred_shortlist[i]['xmin'] < 774:
-#                             pred = pred_shortlist[i]
-#                             break
-                    
-#                     # If no prediction is central, choose the one with the largest area
-#                     if isinstance(pred,str):
-#                         # Choosing one with largest area if none are central
-#                         pred_shortlist.sort(key=lambda x: x['bboxArea']) 
-#                         pred = pred_shortlist[-1]
-        
-#         # Draw the bounding box on the image
-#         if not isinstance(pred,str):
-#             draw_own_bbox(np.array(img), pred['xmin'], pred['ymin'], pred['xmax'], pred['ymax'], pred['name'])
-
-#         name_to_id = {
-#             "NA": 'NA',
-#             "Bullseye": 0,
-#             "one": 11,
-#             "two": 12,
-#             "three": 13,
-#             "four": 14,
-#             "five": 15,
-#             "six": 16,
-#             "seven": 17,
-#             "eight": 18,
-#             "nine": 19,
-#             "A": 20,
-#             "B": 21,
-#             "C": 22,
-#             "D": 23,
-#             "E": 24,
-#             "F": 25,
-#             "G": 26,
-#             "H": 27,
-#             "S": 28,
-#             "T": 29,
-#             "U": 30,
-#             "V": 31,
-#             "W": 32,
-#             "X": 33,
-#             "Y": 34,
-#             "Z": 35,
-#             "up": 36,
-#             "down": 37,
-#             "right": 38,
-#             "left": 39,
-#             "circle": 40
-#         }
-#         # If pred is not a string, i.e. a prediction was made and pred is not 'NA'
-#         if not isinstance(pred,str):
-#             image_id = str(name_to_id[pred['name']])
-#         else:
-#             image_id = 'NA'
-#         print(f"Final result: {image_id}")
-#         return image_id
-#     # If some error happened, we just return 'NA' so that the inference loop is closed
-#     except:
-        print(f"Final result: NA")
-        return 'NA'
+    except Exception as e:
+        print(f"⚠️ Error: {e} | Returning NA")
+        return "NA"
 
 def predict_image_week_9(image, model):
     # Load the image
