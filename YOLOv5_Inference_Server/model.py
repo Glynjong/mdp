@@ -298,6 +298,8 @@ def predict_image(image, model, signal):
     except Exception as e:
         print(f"Error during prediction: {e}")
         return 'NA'
+    
+    
 # nat friend's model
 # def predict_image(image, model, signal):
 #     """
