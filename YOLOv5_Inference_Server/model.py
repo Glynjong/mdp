@@ -189,7 +189,8 @@ def draw_own_bbox(img,x1,y1,x2,y2,label,color=(36,255,12),text_color=(0,0,0)):
         "37": 37,
         "38": 38,
         "39": 39,
-        "40": 40
+        "40": 40,
+        "41": 41
     }
     # Reformat the label to {label name}-{label id}
     label_id = name_to_id.get(label, 'NA')
@@ -278,7 +279,7 @@ def predict_image(image, model, signal):
             df_results = df_results.sort_values('bboxArea', ascending=False)
 
             # Filter out Bullseye
-            pred_list = df_results[df_results['name'] != 'Bullseye']
+            pred_list = df_results[df_results['name'] != '41']
             # pred_list = df_results[df_results['name'] != 'Bullseye-id10']
 
             # Initialize prediction to NA
@@ -286,7 +287,7 @@ def predict_image(image, model, signal):
 
             # If only one label is detected and it's not Bullseye
             if len(pred_list) == 1:
-                if pred_list.iloc[0]['name'] != 'Bullseye':
+                if pred_list.iloc[0]['name'] != '41':
                 # if pred_list.iloc[0]['name'] != 'Bullseye-id10':
                     pred = pred_list.iloc[0]
 
@@ -430,7 +431,8 @@ def predict_image(image, model, signal):
                     "37": 37,
                     "38": 38,
                     "39": 39,
-                    "40": 40
+                    "40": 40,
+                    "41": 41
                 }
             if not isinstance(pred, str):
                 image_id = str(name_to_id[pred['name']])
@@ -474,7 +476,7 @@ def predict_image_week_9(image, model):
     if pred_list.size != 0:
         # Go through the predictions, and choose the first one with confidence > 0.5
         for _, row in pred_list.iterrows():
-            if row['name'] != 'Bullseye' and row['confidence'] > 0.5:
+            if row['name'] != '41' and row['confidence'] > 0.5:
                 pred = row    
                 break
 
