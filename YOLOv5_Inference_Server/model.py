@@ -189,7 +189,8 @@ def draw_own_bbox(img,x1,y1,x2,y2,label,color=(36,255,12),text_color=(0,0,0)):
     #     "37": 37,
     #     "38": 38,
     #     "39": 39,
-    #     "40": 40
+    #     "40": 40,
+    #     "41": 41,
     # }
     # Reformat the label to {label name}-{label id}
     label_id = name_to_id.get(label, 'NA')
@@ -430,7 +431,8 @@ def predict_image(image, model, signal):
                 #     "37": 37,
                 #     "38": 38,
                 #     "39": 39,
-                #     "40": 40
+                #     "40": 40,
+                #     "41": 41,
                 # }
             if not isinstance(pred, str):
                 image_id = str(name_to_id[pred['name']])
@@ -447,65 +449,6 @@ def predict_image(image, model, signal):
         print(f"Error during prediction: {e}")
         return 'NA'
       
-# nat friend's model
-# def predict_image(image, model, signal):
-    """
-    Predict the image using the YOLO model and return the predicted label.
-
-    Inputs
-    ------
-    image: str - filename of the image to predict
-    model: torch hub YOLO model - loaded YOLO model using torch.hub
-    signal: str - signal for further filtering (L, R, C)
-
-    Returns
-    -------
-    str - predicted label
-    """
-    try:
-        # Load the image
-        img = Image.open(os.path.join('images', image))
-        img_array = np.array(img)  # Convert to NumPy array
-
-        # Run YOLO inference (Fixed: Added `size=640`)
-        results = model(img_array, size=640)  # ✅ Corrected for torch.hub
-
-        # Extract prediction results (Fixed: Removed `[0]`)
-        df_results = results.pandas().xyxy[0]
-
-        # Calculate bounding box area
-        df_results['bboxArea'] = (df_results['ymax'] - df_results['ymin']) * (df_results['xmax'] - df_results['xmin'])
-
-        # 🔥 Fix: Use `df_results['class']` instead of `df_results['name']`
-        df_results = df_results[df_results['class'] != 0]  # Filter out class ID 0
-
-        if df_results.empty:
-            print("No valid predictions found.")
-            return "NA"
-
-        # Select the largest detected object
-        pred = df_results.sort_values('bboxArea', ascending=False).iloc[0]
-
-        # Get class ID (Fixed: Changed `name` to `class`)
-        class_id = int(pred['class'])  # ✅ Get the class ID from results
-
-        # Convert class ID to label (Fixed: Mapping keys are now class IDs)
-        name_to_id = {
-            0: "NA", 10: "Bullseye", 11: "one", 12: "two", 13: "three", 14: "four", 15: "five",
-            16: "six", 17: "seven", 18: "eight", 19: "nine", 20: "A", 21: "B", 22: "C", 23: "D",
-            24: "E", 25: "F", 26: "G", 27: "H", 28: "S", 29: "T", 30: "U", 31: "V", 32: "W",
-            33: "X", 34: "Y", 35: "Z", 36: "up", 37: "down", 38: "right", 39: "left", 40: "circle"
-        }
-
-        # Get the class name from ID, defaulting to class_id if not found
-        image_id = name_to_id.get(class_id, str(class_id))  # ✅ Ensures valid label
-
-        print(f"Final result: {image_id}")
-        return image_id
-
-    except Exception as e:
-        print(f"⚠️ Error: {e} | Returning NA")
-        return "NA"
 
 def predict_image_week_9(image, model):
     # Load the image
