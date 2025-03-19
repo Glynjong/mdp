@@ -13,6 +13,10 @@ if not os.path.exists('uploads'):
     os.makedirs('uploads')
 if not os.path.exists('runs'):
     os.makedirs('runs')
+if not os.path.exists('images'):
+    os.makedirs('images')
+if not os.path.exists('own_results'):
+    os.makedirs('own_results')
 @app.route('/status', methods=['GET'])
 def status():
     """
@@ -42,8 +46,8 @@ def image_predict():
     obstacle_id = constituents[1]
 
     ## Week 8 ## 
-    signal = constituents[2].strip(".jpg")
-    image_id = predict_image(filename, model, signal)
+    #signal = constituents[2].strip(".jpg")
+    image_id = predict_image(filename, model)
 
     ## Week 9 ## 
     # We don't need to pass in the signal anymore

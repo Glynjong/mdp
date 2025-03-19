@@ -34,24 +34,9 @@ def load_model():
     """
     Load the model from the local directory
     """
-    # Nat model load
-    # temp = pathlib.PosixPath
-    # pathlib.PosixPath = pathlib.WindowsPath
-    # file_path = r"C:\Users\DELL G15\Desktop\SCHOOL\MDP\mdp\Weights\best_yolo5_2024_10_18.pt"
-    # yolov5_path = r"C:\Users\DELL G15\Desktop\SCHOOL\MDP\mdp\yolov5"  # Explicit full path
-
-    # print(f"Loading YOLOv5 from: {yolov5_path}")
     
-    # model = torch.hub.load(yolov5_path, 'custom', path=file_path, source='local', force_reload=True)
-
-    # print("✅ Model Loaded Successfully!")
-    # model = YOLO(file_path)  
-    #model.conf = 0.6  # confidence threshold
-
-    
-    model = YOLO("../Weights/best_plsplspls.pt")
-    # model = YOLO("../Weights/bestv3_nat.pt")
-    # model = YOLO("../Weights/best_e205v8.pt")
+    # model = YOLO("../Weights/best_plsplspls.pt") 
+    model = YOLO("../Weights/task2_jet.pt")
     # model = YOLO("../Weights/best_kev.pt")
     # print("Model Classes:", model.names)
     return model
@@ -125,40 +110,6 @@ def draw_own_bbox(img,x1,y1,x2,y2,label,color=(36,255,12),text_color=(0,0,0)):
 
     # name_to_id = {
     #     "NA": 'NA',
-    #     "Bullseye-id10": 0,
-    #     "one_id11": 11,
-    #     "two_id12": 12,
-    #     "three_id13": 13,
-    #     "four_id14": 14,
-    #     "five_id15": 15,
-    #     "six_id16": 16,
-    #     "seven_id17": 17,
-    #     "eight_id18": 18,
-    #     "nine_id19": 19,
-    #     "A_id20": 20,
-    #     "B_id21": 21,
-    #     "C_id22": 22,
-    #     "D_id23": 23,
-    #     "E_id24": 24,
-    #     "F_id25": 25,
-    #     "G_id26": 26,
-    #     "H_id27": 27,
-    #     "S_id28": 28,
-    #     "T_id29": 29,
-    #     "U_id30": 30,
-    #     "V_id31": 31,
-    #     "W_id32": 32,
-    #     "X_id33": 33,
-    #     "Y_id34": 34,
-    #     "Z_id35": 35,
-    #     "up_id36": 36,
-    #     "down_id37": 37,
-    #     "right_id38": 38,
-    #     "left_id39": 39,
-    #     "stop-id40": 40
-    # }
-    # name_to_id = {
-    #     "NA": 'NA',
     #     "0": 0,
     #     "11": 11,
     #     "12": 12,
@@ -218,8 +169,9 @@ def draw_own_bbox(img,x1,y1,x2,y2,label,color=(36,255,12),text_color=(0,0,0)):
     cv2.imwrite(f"own_results/annotated_image_{label}_{rand}.jpg", img)
 
 
-def predict_image(image, model, signal):
+def predict_image(image, model):
     try:
+        signal = " "
         # Load the image
         img = Image.open(os.path.join('images', image))
 
@@ -280,7 +232,6 @@ def predict_image(image, model, signal):
 
             # Filter out Bullseye
             pred_list = df_results[df_results['name'] != 'Bullseye']
-            # pred_list = df_results[df_results['name'] != 'Bullseye-id10']
 
             # Initialize prediction to NA
             pred = 'NA'
@@ -298,7 +249,6 @@ def predict_image(image, model, signal):
                 current_area = pred_list.iloc[0]['bboxArea']
                 for _, row in pred_list.iterrows():
                     if row['name'] != 'Bullseye' and row['confidence'] > 0.5 and (
-                    # if row['name'] != 'Bullseye-id10' and row['confidence'] > 0.5 and (
                         (current_area * 0.8 <= row['bboxArea']) or
                         (row['name'] == 'One' and current_area * 0.6 <= row['bboxArea'])
                     ):
@@ -365,40 +315,6 @@ def predict_image(image, model, signal):
                 "circle": 40
             }
             
-            # name_to_id = {
-            #     "NA": 'NA',
-            #     "Bullseye-id10": 0,
-            #     "one_id11": 11,
-            #     "two_id12": 12,
-            #     "three_id13": 13,
-            #     "four_id14": 14,
-            #     "five_id15": 15,
-            #     "six_id16": 16,
-            #     "seven_id17": 17,
-            #     "eight_id18": 18,
-            #     "nine_id19": 19,
-            #     "A_id20": 20,
-            #     "B_id21": 21,
-            #     "C_id22": 22,
-            #     "D_id23": 23,
-            #     "E_id24": 24,
-            #     "F_id25": 25,
-            #     "G_id26": 26,
-            #     "H_id27": 27,
-            #     "S_id28": 28,
-            #     "T_id29": 29,
-            #     "U_id30": 30,
-            #     "V_id31": 31,
-            #     "W_id32": 32,
-            #     "X_id33": 33,
-            #     "Y_id34": 34,
-            #     "Z_id35": 35,
-            #     "up_id36": 36,
-            #     "down_id37": 37,
-            #     "right_id38": 38,
-            #     "left_id39": 39,
-            #     "stop-id40": 40
-            # }
                 # name_to_id = {
                 #     "NA": 'NA',
                 #     "0": 0,
@@ -488,8 +404,8 @@ def predict_image_week_9(image, model):
     name_to_id = {
         "NA": 'NA',
         "Bullseye": 10,
-        "Right": 38,
-        "Left": 39,
+        "right": 38,
+        "left": 39,
         "Right Arrow": 38,
         "Left Arrow": 39,
     }

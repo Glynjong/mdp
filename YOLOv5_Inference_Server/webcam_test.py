@@ -3,8 +3,8 @@ from ultralytics import YOLO
 import numpy as np
 
 # Load two YOLO models
-model1 = YOLO('../Weights/best_kev.pt')  # First model
-model2 = YOLO('../Weights/best_plsplspls.pt')  # Second model
+model1 = YOLO('../Weights/task2_nat.pt')  # First model
+model2 = YOLO('../Weights/task2_jet.pt')  # Second model
 
 # Initialize webcam
 cap = cv2.VideoCapture(0)
